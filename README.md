@@ -1,4 +1,4 @@
-# Blockchain-based Decentralized Fund Collector Smart Contract
+# Blockchain Based Decentralized Fund Collector Smart Contract
 
 This repository contains a blockchain-based decentralized fund collector smart contract. The smart contract is designed to collect funds from multiple investors and distribute them to a specified beneficiary in a decentralized and secure manner.
 
