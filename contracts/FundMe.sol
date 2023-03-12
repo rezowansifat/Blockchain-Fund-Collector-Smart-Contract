@@ -7,6 +7,13 @@ import "./PriceConverter.sol";
 
 error FundMe__NotOwner();
 
+/**
+ * @title  Blockchain Based Decentralized Fund Collector Smart Contract
+ * @author Rezowan SIfat
+ * @notice This Contract is licensed under the MIT License. See the LICENSE file for more information.
+ * @dev npx hardhat  run  scripts/deploy.js
+ */
+
 contract FundMe {
     // Type Declarations
     using PriceConverter for uint256;
