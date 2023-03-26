@@ -36,8 +36,51 @@ describe ("FundMe", function(){
         })
         it("Adds funder to array of funders", async () => {
             await fundMe.fund({ value: sendValue })
-            const response = await fundMe. (0)
+            const response = await fundMe.getFunder(0)
             assert.equal(response, deployer)
+        })
+    })
+
+    describe ("withdraw", function(){
+        beforeEach(async function(){
+            await fundMe.fund({value : sendValue})
+        })
+
+        it("WithDraw ETH from a single founder", async function(){
+            const startingFundmeBalance = await fundMe.provider.getBalance(
+                fundMe.address
+            )
+
+            const startingDeployerblance = await fundMe.provider.getBalance(
+                deployer
+            )
+
+            const transactionResponse = await fundMe.withdraw();
+            const transactionReceipt = await transactionResponse.wait(1)
+
+            console.log(transactionReceipt);
+
+            //GETTING GAS DETAILS
+            const {gasUsed, effectiveGasPrice } = transactionReceipt
+
+            const gasCost = gasUsed.mul(effectiveGasPrice)
+
+            const endingFundmeBalnace = await fundMe.provider.getBalance(
+                fundMe.address
+            )
+
+            const endingDeployerBalnce = await fundMe.provider.getBalance(
+                deployer
+            )
+
+            assert.equal(endingFundmeBalnace, 0)
+            assert.equal(startingFundmeBalance.add(startingDeployerblance).toString() , 
+            endingDeployerBalnce.add(gasCost).toString())
+
+        })
+
+        it("allows us to withdraw with multiple funders", async function(){
+            
         })
     })
 })
