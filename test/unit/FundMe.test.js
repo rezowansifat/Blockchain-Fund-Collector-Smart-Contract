@@ -15,13 +15,16 @@ describe ("FundMe", function(){
 
         //GETTING ALL DEPLOYMENT TAG's USEING fixture
         await deployments.fixture(["all"])
+
         fundMe = await ethers.getContract("FundMe", deployer)
+
         mockV3Aggregator = await ethers.getContract(
             "MockV3Aggregator",
             deployer
         ) 
     })
 
+    //TESTING fund me constructor
     describe("constructor", function () {
         it("sets the aggregator addresses correctly", async () => {
             const response = await fundMe.getPriceFeed()
@@ -34,11 +37,13 @@ describe ("FundMe", function(){
             await expect(fundMe.fund()).to.be.revertedWith("You need to spend more ETH!")
         })
 
+        //comparing fundede value and mapping value
         it("Updates the amount funded data structure", async()=>{
                 await fundMe.fund({value : sendValue});
                 const response = await fundMe.getAddressToAmountFunded(deployer)
                assert.equal(response.toString(), sendValue.toString());
         })
+
         it("Adds funder to array of funders", async () => {
             await fundMe.fund({ value: sendValue })
             const response = await fundMe.getFunder(0)
@@ -46,8 +51,9 @@ describe ("FundMe", function(){
         })
     })
 
-    describe ("withdraw", function(){
-        beforeEach(async function(){
+    //TESTING withdraw FUNCTION
+        describe ("withdraw", function(){
+            beforeEach(async function(){
             await fundMe.fund({value : sendValue})
         })
 
@@ -96,6 +102,9 @@ describe ("FundMe", function(){
                
             //GETTING GAS PRICE
             const transactionReceipt = await transactionResponse.wait()
+            
+            //console.log(transactionReceipt);
+
             const { gasUsed, effectiveGasPrice } = transactionReceipt
             const withdrawGasCost = gasUsed.mul(effectiveGasPrice)
 
