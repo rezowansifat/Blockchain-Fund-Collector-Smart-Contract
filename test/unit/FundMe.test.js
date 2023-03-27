@@ -6,9 +6,14 @@ describe ("FundMe", function(){
     let fundMe
     let deployer
     let mockV3Aggregator
+
+    //TAKING ETH VALUE
     const sendValue = ethers.utils.parseEther("1")
+
     beforeEach(async () =>{
         deployer = (await getNamedAccounts()).deployer
+
+        //GETTING ALL DEPLOYMENT TAG's USEING fixture
         await deployments.fixture(["all"])
         fundMe = await ethers.getContract("FundMe", deployer)
         mockV3Aggregator = await ethers.getContract(
