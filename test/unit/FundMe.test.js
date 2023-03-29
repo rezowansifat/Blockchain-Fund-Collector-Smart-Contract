@@ -78,6 +78,7 @@ describe ("FundMe", function(){
             const endingDeployerBalance =
                 await fundMe.provider.getBalance(deployer)
 
+            //Comapring 
             assert.equal(endingFundMeBalance, 0)
             assert.equal(
                 startingFundMeBalance
@@ -87,13 +88,15 @@ describe ("FundMe", function(){
             )
         })
 
-        
+        //multiple funders
         it("allows us to withdraw with multiple funders", async function(){
             const accounts = await ethers.getSigners()
+
             for (i = 1; i < 6; i++) {
                 const fundMeConnectedContract = await fundMe.connect(
                     accounts[i]
                 )
+
                 await fundMeConnectedContract.fund({ value: sendValue })
             }
 
@@ -140,6 +143,7 @@ describe ("FundMe", function(){
             }
         })
 
+        //owner withdraw
         it("Only allows the owner to withdraw", async function(){
             const accounts = await ethers.getSigners()
             const attacker = accounts[1];
@@ -151,7 +155,5 @@ describe ("FundMe", function(){
             ).to.be.revertedWith("FundMe__NotOwner")
         })
     })
-
-
     
 })
