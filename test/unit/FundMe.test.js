@@ -58,6 +58,8 @@ describe ("FundMe", function(){
         })
 
         it("withdraws ETH from a single funder", async () => {
+
+            //GETTING STARTING BALANCE
             const startingFundMeBalance =
                 await fundMe.provider.getBalance(fundMe.address)
             const startingDeployerBalance =
@@ -65,9 +67,11 @@ describe ("FundMe", function(){
 
             const transactionResponse = await fundMe.withdraw()
             const transactionReceipt = await transactionResponse.wait()
+
             const { gasUsed, effectiveGasPrice } = transactionReceipt
             const gasCost = gasUsed.mul(effectiveGasPrice)
 
+            //GETTING ENDING BALANCE
             const endingFundMeBalance = await fundMe.provider.getBalance(
                 fundMe.address
             )
@@ -135,7 +139,6 @@ describe ("FundMe", function(){
                 )
             }
         })
-
 
         it("Only allows the owner to withdraw", async function(){
             const accounts = await ethers.getSigners()
