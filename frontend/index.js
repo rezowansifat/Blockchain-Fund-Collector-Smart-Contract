@@ -15,3 +15,7 @@ async function connect() {
     }
   }
   
+
+  async function fund(ethAmount){
+    console.log(`Funding with ${ethAmount} .....`)
+  }
